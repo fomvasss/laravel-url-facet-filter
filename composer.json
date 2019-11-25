@@ -1,0 +1,38 @@
+{
+    "name": "fomvasss/laravel-url-facet-filter",
+    "description": "Building and displaying facet filter parameters and managing them",
+    "keywords": [
+        "filter",
+        "facet",
+        "facet-filter",
+        "url",
+        "alias",
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "Vasyl Fomin",
+            "email": "fomvasss@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "illuminate/support": "^5.8|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fomvasss\\UrlFacetFilter\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fomvasss\\UrlFacetFilter\\ServiceProvider"
+            ],
+            "aliases": {
+                "FacetFilter": "Fomvasss\\UrlFacetFilter\\Facade"
+            }
+        }
+    }
+}
