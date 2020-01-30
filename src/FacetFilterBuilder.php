@@ -59,12 +59,13 @@ class FacetFilterBuilder
     /**
      * @param string|null $attr
      * @param string|null $value
-     * @return null|string|string[]
+     * @param bool $replaceValue
+     * @return string
      */
-    public function build(string $attr = null, string $value = null): string
+    public function build(string $attr = null, string $value = null, bool $replaceValue = false): string
     {
         $currentFilter = request($this->getFilterUrlKey(), '');
-        $newFilter = $this->toggle($currentFilter, $attr, $value);
+        $newFilter = $this->toggle($currentFilter, $attr, $value, $replaceValue);
 
         $persistParameters = request()->except('sort', 'direction', 'page', $this->getFilterUrlKey());
 
@@ -161,9 +162,10 @@ class FacetFilterBuilder
      * @param string $currentFilter
      * @param string|null $attr
      * @param string|null $value
+     * @param bool $replaceValue
      * @return string
      */
-    public function toggle(string $currentFilter, string $attr = null, string $value = null): string
+    public function toggle(string $currentFilter, string $attr = null, string $value = null, bool $replaceValue = false): string
     {
         if (empty($attr)) {
             return '';
@@ -182,7 +184,12 @@ class FacetFilterBuilder
                 unset($filterArray[$attr]);
             }
         } else {
-            $filterArray[$attr][] = $value;
+            if ($replaceValue) {
+                $filterArray[$attr] = [];
+                $filterArray[$attr][0] = $value;
+            } else {
+                $filterArray[$attr][] = $value;
+            }
         }
 
         return $this->toStr($filterArray);

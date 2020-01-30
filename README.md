@@ -26,6 +26,15 @@ php artisan vendor:publish --provider="Fomvasss\UrlFacetFilter\ServiceProvider"
 
 ## Usage
 
+### Build url`s
+```blade
+<a href="{{ \FacetFilter::build('color', 'red') }}">Red</a>	
+<a href="{{ \FacetFilter::build('color', 'green') }}">Green</a>	
+<a href="{{ \FacetFilter::build('size', 'm') }}">M</a>	
+<a href="{{ \FacetFilter::build('size', 'xl') }}">XL</a>	
+```
+
+### Usage in controller
 `app/Http/Controllers/ProductControllr.php`
 
 ```php
@@ -52,19 +61,19 @@ class ProductController extends Controller
 
 Example, in url string:
 ```text
-https://my-site.com/products?⛃=length☛5⚬8♦serial☛master-lab♦ergonomic☛form-1⚬form-2
+https://my-site.com/products?⛃=color☛red⚬green♦size☛m♦ergonomic☛form-1⚬form-2
 ```
 
 In php controller (after prepare `FacetFilter::toArray()`):
 
 ```html
 array:3 [▼
-  "length" => array:2 [▼
-    0 => "5"
-    1 => "8"
+  "color" => array:2 [▼
+    0 => "red"
+    1 => "green"
   ]
-  "serial" => array:1 [▼
-    0 => "master-lab"
+  "size" => array:1 [▼
+    0 => "m"
   ]
   "ergonomic" => array:2 [▼
     0 => "form-1"
