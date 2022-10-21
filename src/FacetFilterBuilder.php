@@ -85,8 +85,8 @@ class FacetFilterBuilder
      */
     public function reset(array $add = []): string
     {
-        $except = array_merge(['sort', 'direction', 'page'], $add);
-        $queryString = urldecode(http_build_query(request()->except($except, $this->getFilterUrlKey())));
+        $except = array_merge(['sort', 'direction', 'page', $this->getFilterUrlKey()], $add);
+        $queryString = urldecode(http_build_query(request()->except($except)));
 
         return rtrim(url($this->getUrlPath().'?'.$queryString), '?');
     }
