@@ -83,9 +83,10 @@ class FacetFilterBuilder
     /**
      * @return string
      */
-    public function reset(): string
+    public function reset(array $add = []): string
     {
-        $queryString = urldecode(http_build_query(request()->except('sort', 'direction', 'page', $this->getFilterUrlKey())));
+        $except = array_merge(['sort', 'direction', 'page'], $add);
+        $queryString = urldecode(http_build_query(request()->except($except, $this->getFilterUrlKey())));
 
         return rtrim(url($this->getUrlPath().'?'.$queryString), '?');
     }
@@ -116,9 +117,9 @@ class FacetFilterBuilder
     /**
      * @return bool
      */
-    public function issetFilter(): bool
+    public function issetFilter(array $add = []): bool
     {
-        return request()->has($this->getFilterUrlKey());
+        return request()->hasAny(array_merge([$this->getFilterUrlKey()], $add));
     }
 
     /**
