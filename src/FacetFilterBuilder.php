@@ -67,7 +67,8 @@ class FacetFilterBuilder
         $currentFilter = request($this->getFilterUrlKey(), '');
         $newFilter = $this->toggle($currentFilter, $attr, $value, $replaceValue);
 
-        $persistParameters = request()->except('sort', 'direction', 'page', $this->getFilterUrlKey());
+        $keys = $this->config->get('laravel-url-facet-filter.except_keys', []);
+        $persistParameters = request()->except(array_merge($keys, [$this->getFilterUrlKey()]));
 
         if ($newFilter) {
             $queryString = urldecode(http_build_query(array_merge($persistParameters, [
@@ -85,7 +86,8 @@ class FacetFilterBuilder
      */
     public function reset(array $add = []): string
     {
-        $except = array_merge(['sort', 'direction', 'page', $this->getFilterUrlKey()], $add);
+        $keys = $this->config->get('laravel-url-facet-filter.except_keys', []);
+        $except = array_merge($keys, [$this->getFilterUrlKey()], $add);
         $queryString = urldecode(http_build_query(request()->except($except)));
 
         return rtrim(url($this->getUrlPath().'?'.$queryString), '?');

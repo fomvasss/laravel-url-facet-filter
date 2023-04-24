@@ -16,5 +16,10 @@ return [
         'values_delimiter' => '⚬',
 
         'attr_values_delimiter' => '☛',
-    ]
+    ],
+
+    
+    'except_keys' => [
+        'sort', 'direction', 'order', 'page',
+    ],
 ];
