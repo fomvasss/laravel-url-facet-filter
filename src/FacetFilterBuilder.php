@@ -62,7 +62,7 @@ class FacetFilterBuilder
      * @param bool $replaceValue
      * @return string
      */
-    public function build(string $attr = null, string $value = null, bool $replaceValue = false): string
+    public function build(?string $attr = null, ?string $value = null, bool $replaceValue = false): string
     {
         $currentFilter = request($this->getFilterUrlKey(), '');
         $newFilter = $this->toggle($currentFilter, $attr, $value, $replaceValue);
@@ -129,7 +129,7 @@ class FacetFilterBuilder
      * @param string|null $value
      * @return bool
      */
-    public function has(string $attr, string $value = null): bool
+    public function has(string $attr, ?string $value = null): bool
     {
         $currentFilter = request($this->getFilterUrlKey(), '');
 
@@ -168,7 +168,7 @@ class FacetFilterBuilder
      * @param bool $replaceValue
      * @return string
      */
-    public function toggle(string $currentFilter, string $attr = null, string $value = null, bool $replaceValue = false): string
+    public function toggle(string $currentFilter, ?string $attr = null, ?string $value = null, bool $replaceValue = false): string
     {
         if (empty($attr)) {
             return '';
@@ -202,7 +202,7 @@ class FacetFilterBuilder
      * @param string|null $str
      * @return array
      */
-    public function toArray(string $str = null): array
+    public function toArray(?string $str = null): array
     {
         $facet = [];
         if (count($filterAttrsValues = explode($this->getAttrsDelimiter(), $str))) {
